@@ -16,7 +16,7 @@ SRCFILES := $(wildcard src/*.c)
 all: $(SRCFILES:src/%.c=obj/%.o)
 	$(CC) $(CFLAGS) obj/*.o -o bin/prog
 
-obj/%.o: src/%.cpp
+obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ -I./inc
 
 run: bin/prog
