@@ -5,7 +5,8 @@
 
 int validaExpressao(char *expressao);
 int prioridade(char c);
-void infixToPostfix(char *expressao);
-void conversao(char *expressao);
+void infixToPostfix(char *expressao, char *expressao_pos);
+void avaliaExpressao(char *expressao_pos);
+void resolucao(char *expressao);
 
 #endif

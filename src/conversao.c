@@ -66,11 +66,10 @@ int prioridade(char c){
 }
 
 /* converte a expressão para o formato posfixo */
-void infixToPostfix(char *expressao){
+void infixToPostfix(char *expressao, char *expressao_pos){
 	int i = 0;
 	int j = 0;
 	char c;
-	char expressao_pos[100];
 	t_pilha *operadores = alocaPilha();
 
 	for(i = 0; expressao[i] != '\0'; i++){
@@ -98,11 +97,49 @@ void infixToPostfix(char *expressao){
 	expressao_pos[j++] = '\0';
 
 	printf("%s\n", expressao_pos);
+	liberaPilha(operadores);
 }
 
+/* avalia e soluciona a expressão convertida */
+void avaliaExpressao(char *expressao_pos){
+	t_pilha *operandos = alocaPilha();
+	int i;
+	int resultado = 0;
 
+	for(i = 0; expressao_pos[i] != '\0'; i++){
+		if(isalnum(expressao_pos[i])){
+			push(operandos, ((int)expressao_pos[i] - '0'));
+		}
+		else if((expressao_pos[i] == '+') || (expressao_pos[i] == '-') || (expressao_pos[i] == '*') || (expressao_pos[i] == '/')){
+			int op2;
+			switch(expressao_pos[i]){
+				case '+':
+					resultado = pop(operandos) + pop(operandos);
+					push(operandos, resultado);
+					break;
+				case '-':
+					op2 = pop(operandos);
+					resultado = pop(operandos) - op2;
+					push(operandos, resultado);
+					break;
+				case '*':
+					resultado = pop(operandos) * pop(operandos);
+					push(operandos, resultado);
+					break;
+				case '/':
+					op2 = pop(operandos);
+					resultado = pop(operandos)/op2;
+					push(operandos, resultado);
+					break;
+			}
+		}
+	}
+	printf("Resultado: %d\n", pop(operandos));
+	liberaPilha(operandos);
+}
 
-void conversao(char *expressao){
+void resolucao(char *expressao){
+	char expressao_pos[100];
 	if(validaExpressao(expressao)){
 		printf("Expressão válida!\n");
 	}
@@ -111,4 +148,7 @@ void conversao(char *expressao){
 		printf("Expressão inválida!\n");
 		exit(1);
 	}
+
+	infixToPostfix(expressao, expressao_pos);
+	avaliaExpressao(expressao_pos);
 }
