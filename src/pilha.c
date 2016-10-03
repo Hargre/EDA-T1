@@ -60,13 +60,14 @@ int pop(t_pilha *pilha){
 /* Imprime todos os elementos na pilha */
 void imprimirPilha(t_pilha *pilha){
 	t_elemento *ptr;
+	int counter = 1;
 
 	if(pilhaVazia(pilha)){
-		printf("Stack Underflow!\n");
+		printf("Pilha Vazia!\n");
 		return;
 	}
 	
 	for(ptr = pilha->topo; ptr != NULL; ptr = ptr->proximo){
-		printf("%d\n", ptr->valor);
+		printf("%d. %d\n", counter++, ptr->valor);
 	}
 }
