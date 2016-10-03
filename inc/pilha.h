@@ -17,8 +17,8 @@ int pilhaVazia(t_pilha *pilha);
 
 t_elemento *alocaElemento();
 
-void push(t_pilha *pilha, char valor);
-char pop(t_pilha *pilha);
+void push(t_pilha *pilha, int valor);
+int pop(t_pilha *pilha);
 
 void imprimirPilha(t_pilha *pilha);
 /* -------------------------------- */
