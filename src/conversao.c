@@ -5,13 +5,14 @@
 #include "conversao.h"
 
 /* analisa a equação inserida pelo usuário e confere se a mesma é válida */
-int validaExpressao(t_pilha *pilha, char *expressao){
+int validaExpressao(char *expressao){
+	t_pilha *pilha = alocaPilha();
 	int flag = 1;
 	int i;
 	char c;
 	for(i = 0; expressao[i] != '\0'; i++){
 		if((expressao[i] == '(') || (expressao[i] == '[') || (expressao[i] == '{')){
-			push(pilha, expressao[i]);
+			push(pilha, (int)expressao[i]);
 		}
 
 		if((expressao[i] == ')') || (expressao[i] == ']') || (expressao[i] == '}')){
@@ -19,7 +20,7 @@ int validaExpressao(t_pilha *pilha, char *expressao){
 				flag = 0;
 			}
 			else{
-				c = pop(pilha);
+				c = (char)pop(pilha);
 			}
 
 			switch(expressao[i]){
@@ -46,9 +47,11 @@ int validaExpressao(t_pilha *pilha, char *expressao){
 		flag = 0;
 	}
 
+	liberaPilha(pilha);
 	return flag;
 }
 
+/* definindo precedência de operadores */
 int prioridade(char c){
 	if(c == '('){
 		return 0;
@@ -75,23 +78,37 @@ void infixToPostfix(char *expressao){
 			expressao_pos[j++] = expressao[i];
 		}
 		else if(expressao[i] == '('){
-			push(operadores, expressao[i]);
+			push(operadores, (int)expressao[i]);
 		}
 		else if(expressao[i] == ')'){
-			while((c = pop(operadores)) != '('){
+			while((c = (char)pop(operadores)) != '('){
 				expressao_pos[j++] = c;
 			}
 		}
 		else{
 			while(!pilhaVazia(operadores) && prioridade(expressao[i]) <= prioridade(operadores->topo->valor)){
-				expressao_pos[j++] = pop(operadores);
+				expressao_pos[j++] = (char)pop(operadores);
 			}
-			push(operadores, expressao[i]);
+			push(operadores, (int)expressao[i]);
 		}
 	}
 	while(!pilhaVazia(operadores)){
-		expressao_pos[j++] = pop(operadores);
+		expressao_pos[j++] = (char)pop(operadores);
 	}
+	expressao_pos[j++] = '\0';
 
 	printf("%s\n", expressao_pos);
+}
+
+
+
+void conversao(char *expressao){
+	if(validaExpressao(expressao)){
+		printf("Expressão válida!\n");
+	}
+
+	else{
+		printf("Expressão inválida!\n");
+		exit(1);
+	}
 }
