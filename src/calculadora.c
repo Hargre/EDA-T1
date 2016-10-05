@@ -6,7 +6,6 @@
 
 void calcular(){
 	char valor;
-	int op2;
 	int resultado;
 	t_pilha *operandos = alocaPilha();
 
@@ -16,22 +15,44 @@ void calcular(){
 		scanf("%c", &valor);
 		__fpurge(stdin);
 		if(valor == '+'){
-			resultado = pop(operandos) + pop(operandos);
-			push(operandos, resultado);
+			if(operandos->topo->proximo != NULL){
+				resultado = pop(operandos) + pop(operandos);
+				push(operandos, resultado);
+			}
+			else{
+				printf("No. insuficiente de operandos!\n");
+				return;
+			}
 		}
 		else if(valor == '-'){
-			op2 = pop(operandos);
-			resultado = pop(operandos) - op2;
-			push(operandos, resultado);
+			if(operandos->topo->proximo != NULL){
+				resultado = pop(operandos) - pop(operandos);
+				push(operandos, resultado);
+			}
+			else{
+				printf("No. insuficiente de operandos!\n");
+				return;
+			}
 		}
 		else if(valor == '*'){
-			resultado = pop(operandos) * pop(operandos);
-			push(operandos, resultado);
+			if(operandos->topo->proximo != NULL){
+				resultado = pop(operandos) * pop(operandos);
+				push(operandos, resultado);
+			}
+			else{
+				printf("No. insuficiente de operandos!\n");
+				return;
+			}
 		}
 		else if(valor == '/'){
-			op2 = pop(operandos);
-			resultado = pop(operandos) / op2;
-			push(operandos, resultado);
+			if(operandos->topo->proximo != NULL){
+				resultado = pop(operandos) / pop(operandos);
+				push(operandos, resultado);
+			}
+			else{
+				printf("No. insuficiente de operandos!\n");
+				return;
+			}
 		}
 		else{
 			push(operandos, ((int)valor - '0'));
