@@ -5,57 +5,39 @@
 #include "calculadora.h"
 
 void calcular(){
-	char valor;
-	int resultado;
+	int valor, resultado;
+	char operador;
 	t_pilha *operandos = alocaPilha();
 
 	imprimirPilha(operandos);
 	__fpurge(stdin);
 	while(1){
-		scanf("%c", &valor);
-		__fpurge(stdin);
-		if(valor == '+'){
-			if(operandos->topo->proximo != NULL){
+		if(scanf("%1[*/-+]", &operador) == 1){
+			__fpurge(stdin);
+
+			if(pilhaVazia(operandos) || operandos->topo->proximo == NULL){
+				printf("Quantidade insuficiente de operandos!\n");
+				return;
+			}
+
+			if(operador == '+'){
 				resultado = pop(operandos) + pop(operandos);
-				push(operandos, resultado);
 			}
-			else{
-				printf("No. insuficiente de operandos!\n");
-				return;
-			}
-		}
-		else if(valor == '-'){
-			if(operandos->topo->proximo != NULL){
+			else if(operador == '-'){
 				resultado = pop(operandos) - pop(operandos);
-				push(operandos, resultado);
 			}
-			else{
-				printf("No. insuficiente de operandos!\n");
-				return;
-			}
-		}
-		else if(valor == '*'){
-			if(operandos->topo->proximo != NULL){
+			else if(operador == '*'){
 				resultado = pop(operandos) * pop(operandos);
-				push(operandos, resultado);
 			}
-			else{
-				printf("No. insuficiente de operandos!\n");
-				return;
-			}
-		}
-		else if(valor == '/'){
-			if(operandos->topo->proximo != NULL){
+			else if(operador == '/'){
 				resultado = pop(operandos) / pop(operandos);
-				push(operandos, resultado);
 			}
-			else{
-				printf("No. insuficiente de operandos!\n");
-				return;
-			}
+
+			push(operandos, resultado);
 		}
-		else{
-			push(operandos, ((int)valor - '0'));
+		else if(scanf("%d", &valor) == 1){
+			__fpurge(stdin);
+			push(operandos, valor);
 		}
 		printf("--------------\n");
 		imprimirPilha(operandos);
