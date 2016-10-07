@@ -84,7 +84,12 @@ void calcular(){
 			__fpurge(stdin);
 			push(operandos, valor);
 		}
-		
+
+		else{
+			__fpurge(stdin);
+			printf("Comando inválido!\n");
+		}
+
 		printf("--------------\n");
 		imprimirPilha(operandos);
 		printf("--------------\n");
