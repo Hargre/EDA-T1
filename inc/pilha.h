@@ -2,7 +2,7 @@
 #define _PILHA_H_
 
 typedef struct elemento{
-	char valor;
+	int valor;
 	struct elemento *proximo;
 }t_elemento;
 
