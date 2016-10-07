@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdio_ext.h> /* para usar __fpurge() */
 #include <stdlib.h>
 #include <ctype.h>
 #include "pilha.h"
@@ -6,13 +7,13 @@
 
 void calcular(){
 	int valor, resultado;
-	char operador;
+	char operador[3];
 	t_pilha *operandos = alocaPilha();
 
 	imprimirPilha(operandos);
 	__fpurge(stdin);
 	while(1){
-		if(scanf("%1[*/-+]", &operador) == 1){
+		if(scanf("%2[*/-+!]", operador) == 1){
 			__fpurge(stdin);
 
 			if(pilhaVazia(operandos) || operandos->topo->proximo == NULL){
@@ -20,20 +21,54 @@ void calcular(){
 				return;
 			}
 
-			if(operador == '+'){
-				resultado = pop(operandos) + pop(operandos);
+			if(operador[0] == '+'){
+				if(operador[1] == '!'){
+					while(operandos->topo->proximo != NULL){
+						resultado = pop(operandos) + pop(operandos);
+						push(operandos, resultado);
+					}
+				}
+				else{
+					resultado = pop(operandos) + pop(operandos);
+					push(operandos, resultado);
+				}
 			}
-			else if(operador == '-'){
-				resultado = pop(operandos) - pop(operandos);
+			else if(operador[0] == '-'){
+				if(operador[1] == '!'){
+					while(operandos->topo->proximo != NULL){
+						resultado = pop(operandos) - pop(operandos);
+						push(operandos, resultado);
+					}
+				}
+				else{
+					resultado = pop(operandos) - pop(operandos);
+					push(operandos, resultado);
+				}
 			}
-			else if(operador == '*'){
-				resultado = pop(operandos) * pop(operandos);
+			else if(operador[0] == '*'){
+				if(operador[1] == '!'){
+					while(operandos->topo->proximo != NULL){
+						resultado = pop(operandos) * pop(operandos);
+						push(operandos, resultado);
+					}
+				}
+				else{
+					resultado = pop(operandos) * pop(operandos);
+					push(operandos, resultado);
+				}
 			}
-			else if(operador == '/'){
-				resultado = pop(operandos) / pop(operandos);
+			else if(operador[0] == '/'){
+				if(operador[1] == '!'){
+					while(operandos->topo->proximo != NULL){
+						resultado = pop(operandos) / pop(operandos);
+						push(operandos, resultado);
+					}
+				}
+				else{
+					resultado = pop(operandos) / pop(operandos);
+					push(operandos, resultado);
+				}
 			}
-
-			push(operandos, resultado);
 		}
 		else if(scanf("%d", &valor) == 1){
 			__fpurge(stdin);
