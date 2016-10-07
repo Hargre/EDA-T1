@@ -72,23 +72,31 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 	char c;
 	t_pilha *operadores = alocaPilha();
 
-	for(i = 0; expressao[i] != '\0'; i++){
-		if(isalnum(expressao[i])){
-			expressao_pos[j++] = expressao[i];
+	while(expressao[i] != '\0'){
+		if(isdigit(expressao[i])){
+			while(isdigit(expressao[i])){
+				expressao_pos[j++] = expressao[i++];
+			}
+			if(!isspace(expressao[i]) && expressao[i] != '\0'){
+				expressao_pos[j++] = ' ';
+			}
 		}
 		else if(expressao[i] == '('){
 			push(operadores, (int)expressao[i]);
+			i++;
 		}
 		else if(expressao[i] == ')'){
 			while((c = (char)pop(operadores)) != '('){
 				expressao_pos[j++] = c;
 			}
+			i++;
 		}
 		else{
 			while(!pilhaVazia(operadores) && prioridade(expressao[i]) <= prioridade(operadores->topo->valor)){
 				expressao_pos[j++] = (char)pop(operadores);
 			}
 			push(operadores, (int)expressao[i]);
+			i++;
 		}
 	}
 	while(!pilhaVazia(operadores)){
@@ -103,12 +111,20 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 /* avalia e soluciona a expressão convertida */
 void avaliaExpressao(char *expressao_pos){
 	t_pilha *operandos = alocaPilha();
-	int i;
+	int i = 0;
 	int resultado = 0;
 
-	for(i = 0; expressao_pos[i] != '\0'; i++){
-		if(isalnum(expressao_pos[i])){
-			push(operandos, ((int)expressao_pos[i] - '0'));
+	while(expressao_pos[i] != '\0'){
+		if(isdigit(expressao_pos[i])){
+			int j = 0;
+			int valor;
+			char num[15];
+			while(isdigit(expressao_pos[i])){
+				num[j++] = expressao_pos[i++];
+			}
+			num[j] = '\0';
+			valor = atoi(num);
+			push(operandos, valor);
 		}
 		else if((expressao_pos[i] == '+') || (expressao_pos[i] == '-') || (expressao_pos[i] == '*') || (expressao_pos[i] == '/')){
 			int op2;
@@ -132,7 +148,9 @@ void avaliaExpressao(char *expressao_pos){
 					push(operandos, resultado);
 					break;
 			}
+			i++;
 		}
+		else i++;
 	}
 	printf("Resultado: %d\n", pop(operandos));
 	liberaPilha(operandos);
