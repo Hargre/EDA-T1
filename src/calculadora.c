@@ -13,7 +13,7 @@ void calcular(){
 	imprimirPilha(operandos);
 	__fpurge(stdin);
 	while(1){
-		if(scanf("%2[*/-+!]", operador) == 1){
+		if(scanf("%2[*/-+!c]", operador) == 1){
 			__fpurge(stdin);
 
 			if(pilhaVazia(operandos) || operandos->topo->proximo == NULL){
@@ -21,7 +21,16 @@ void calcular(){
 				return;
 			}
 
-			if(operador[0] == '+'){
+			if(operador[0] == 'c'){
+				int numCopias = pop(operandos);
+				int valorCopia = pop(operandos);
+				int i;
+				for(i = 0; i < numCopias; i++){
+					push(operandos, valorCopia);
+				}
+			}
+
+			else if(operador[0] == '+'){
 				if(operador[1] == '!'){
 					while(operandos->topo->proximo != NULL){
 						resultado = pop(operandos) + pop(operandos);
@@ -70,10 +79,12 @@ void calcular(){
 				}
 			}
 		}
+
 		else if(scanf("%d", &valor) == 1){
 			__fpurge(stdin);
 			push(operandos, valor);
 		}
+		
 		printf("--------------\n");
 		imprimirPilha(operandos);
 		printf("--------------\n");
