@@ -6,7 +6,7 @@
 #include "calculadora.h"
 
 void calcular(){
-	int valor, resultado;
+	double valor, resultado;
 	char operador[3];
 	t_pilha *operandos = alocaPilha();
 
@@ -22,8 +22,8 @@ void calcular(){
 			}
 
 			if(operador[0] == 'c'){
-				int numCopias = pop(operandos);
-				int valorCopia = pop(operandos);
+				int numCopias = (int)pop(operandos);
+				double valorCopia = pop(operandos);
 				int i;
 				for(i = 0; i < numCopias; i++){
 					push(operandos, valorCopia);
@@ -80,7 +80,7 @@ void calcular(){
 			}
 		}
 
-		else if(scanf("%d", &valor) == 1){
+		else if(scanf("%lf", &valor) == 1){
 			__fpurge(stdin);
 			push(operandos, valor);
 		}

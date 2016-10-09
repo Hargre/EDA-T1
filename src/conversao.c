@@ -12,7 +12,7 @@ int validaExpressao(char *expressao){
 	char c;
 	for(i = 0; expressao[i] != '\0'; i++){
 		if((expressao[i] == '(') || (expressao[i] == '[') || (expressao[i] == '{')){
-			push(pilha, (int)expressao[i]);
+			push(pilha, (double)expressao[i]);
 		}
 
 		if((expressao[i] == ')') || (expressao[i] == ']') || (expressao[i] == '}')){
@@ -82,7 +82,7 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 			}
 		}
 		else if(expressao[i] == '('){
-			push(operadores, (int)expressao[i]);
+			push(operadores, (double)expressao[i]);
 			i++;
 		}
 		else if(expressao[i] == ')'){
@@ -95,7 +95,7 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 			while(!pilhaVazia(operadores) && prioridade(expressao[i]) <= prioridade(operadores->topo->valor)){
 				expressao_pos[j++] = (char)pop(operadores);
 			}
-			push(operadores, (int)expressao[i]);
+			push(operadores, (double)expressao[i]);
 			i++;
 		}
 	}
@@ -112,22 +112,22 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 void avaliaExpressao(char *expressao_pos){
 	t_pilha *operandos = alocaPilha();
 	int i = 0;
-	int resultado = 0;
+	double resultado = 0;
 
 	while(expressao_pos[i] != '\0'){
 		if(isdigit(expressao_pos[i])){
 			int j = 0;
-			int valor;
+			double valor;
 			char num[15];
 			while(isdigit(expressao_pos[i])){
 				num[j++] = expressao_pos[i++];
 			}
 			num[j] = '\0';
-			valor = atoi(num);
+			valor = atof(num);
 			push(operandos, valor);
 		}
 		else if((expressao_pos[i] == '+') || (expressao_pos[i] == '-') || (expressao_pos[i] == '*') || (expressao_pos[i] == '/')){
-			int op2;
+			double op2;
 			switch(expressao_pos[i]){
 				case '+':
 					resultado = pop(operandos) + pop(operandos);
@@ -152,7 +152,7 @@ void avaliaExpressao(char *expressao_pos){
 		}
 		else i++;
 	}
-	printf("Resultado: %d\n", pop(operandos));
+	printf("Resultado: %.2lf\n", pop(operandos));
 	liberaPilha(operandos);
 }
 

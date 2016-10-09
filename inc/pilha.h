@@ -2,7 +2,7 @@
 #define _PILHA_H_
 
 typedef struct elemento{
-	int valor;
+	double valor;
 	struct elemento *proximo;
 }t_elemento;
 
@@ -17,8 +17,8 @@ int pilhaVazia(t_pilha *pilha);
 
 t_elemento *alocaElemento();
 
-void push(t_pilha *pilha, int valor);
-int pop(t_pilha *pilha);
+void push(t_pilha *pilha, double valor);
+double pop(t_pilha *pilha);
 
 void imprimirPilha(t_pilha *pilha);
 /* -------------------------------- */

@@ -32,7 +32,7 @@ t_elemento *alocaElemento(){
 }
 
 /* Operação de push na pilha, empilha um elemento */
-void push(t_pilha *pilha, int valor){
+void push(t_pilha *pilha, double valor){
 	t_elemento *elemento = alocaElemento();
 	elemento->valor = valor;
 	elemento->proximo = pilha->topo;
@@ -40,9 +40,9 @@ void push(t_pilha *pilha, int valor){
 }
 
 /* Operação de pop, remove um elemento do topo e retorna seu valor */
-int pop(t_pilha *pilha){
+double pop(t_pilha *pilha){
 	t_elemento *temp;
-	int valor;
+	double valor;
 
 	if(pilhaVazia(pilha)){
 		printf("Stack Underflow!\n");
@@ -68,6 +68,6 @@ void imprimirPilha(t_pilha *pilha){
 	}
 	
 	for(ptr = pilha->topo; ptr != NULL; ptr = ptr->proximo){
-		printf("%d. %d\n", counter++, ptr->valor);
+		printf("%d. %.2lf\n", counter++, ptr->valor);
 	}
 }
