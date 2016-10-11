@@ -124,7 +124,7 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 	}
 	expressao_pos[j++] = '\0';
 
-	printf("%s\n", expressao_pos);
+	printf("Expressão convertida: %s\n", expressao_pos);
 	liberaPilha(operadores);
 }
 
