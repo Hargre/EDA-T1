@@ -68,6 +68,6 @@ void imprimirPilha(t_pilha *pilha){
 	}
 	
 	for(ptr = pilha->topo; ptr != NULL; ptr = ptr->proximo){
-		printf("%d. %.2lf\n", counter++, ptr->valor);
+		printf("%d. %.2f\n", counter++, ptr->valor);
 	}
 }
