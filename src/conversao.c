@@ -53,16 +53,22 @@ int validaExpressao(char *expressao){
 
 /* definindo precedência de operadores */
 int prioridade(char c){
-	if(c == '('){
+	if(c == '{'){
 		return 0;
 	}
-	else if(c == '+' || c == '-'){
+	else if(c == '['){
 		return 1;
 	}
-	else if(c == '*' || c == '/'){
+	else if(c == '('){
 		return 2;
 	}
-	else return 3;
+	else if(c == '+' || c == '-'){
+		return 3;
+	}
+	else if(c == '*' || c == '/'){
+		return 4;
+	}
+	else return 5;
 }
 
 /* converte a expressão para o formato posfixo */
@@ -81,13 +87,27 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 				expressao_pos[j++] = ' ';
 			}
 		}
-		else if(expressao[i] == '('){
+		else if((expressao[i] == '(') || (expressao[i] == '[') || (expressao[i] == '{')){
 			push(operadores, (double)expressao[i]);
 			i++;
 		}
-		else if(expressao[i] == ')'){
-			while((c = (char)pop(operadores)) != '('){
-				expressao_pos[j++] = c;
+		else if((expressao[i] == ')') || (expressao[i] == ']') || (expressao[i] == '}')){
+			switch(expressao[i]){
+				case ')':
+					while((c = (char)pop(operadores)) != '('){
+						expressao_pos[j++] = c;
+					}
+					break;
+				case ']':
+					while((c = (char)pop(operadores)) != '['){
+						expressao_pos[j++] = c;
+					}
+					break;
+				case '}':
+					while((c = (char)pop(operadores)) != '{'){
+						expressao_pos[j++] = c;
+					}
+					break;
 			}
 			i++;
 		}
@@ -150,9 +170,15 @@ void avaliaExpressao(char *expressao_pos){
 			}
 			i++;
 		}
-		else i++;
+		else if(isspace(expressao_pos[i])){
+			i++;
+		}
+		else{
+			printf("Não pode calcular - Caracter inválido inserido!\n");
+			return;
+		}
 	}
-	printf("Resultado: %.2lf\n", pop(operandos));
+	printf("Resultado: %.2f\n", pop(operandos));
 	liberaPilha(operandos);
 }
 
@@ -164,7 +190,7 @@ void resolucao(char *expressao){
 
 	else{
 		printf("Expressão inválida!\n");
-		exit(1);
+		return;
 	}
 
 	infixToPostfix(expressao, expressao_pos);
