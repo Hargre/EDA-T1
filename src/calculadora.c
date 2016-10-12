@@ -10,7 +10,10 @@ void calcular(){
 	char operador[3];
 	t_pilha *operandos = alocaPilha();
 
-	printf("Os valores digitados serão exibidos na pilha. Para sair, digite 'q' a qualquer momento.\n");
+	printf("Os valores digitados serão exibidos na pilha.\n");
+	printf("Além das operações básicas, esta calculadora aceita dois operadores especiais:\n");
+	printf(">Repetição de operação: ao inserir o caractere '!' após um operador.\n");
+	printf(">Cópia de um operando: inserindo o caractere 'c'.\n");
 
 	imprimirPilha(operandos);
 	__fpurge(stdin);
