@@ -20,3 +20,4 @@ Projeto de conversão e cálculo de operações posfixas a partir de infixas, re
 	* stdio_ext.h - Para uso da função __fpurge();
 	* stdlib.h - Para operações de gerenciamento de memória;
 	* ctype.h - Para detecção de caracteres específicos em strings.
+* Documentação adicional e relatório do projeto se encontram na pasta doc.
