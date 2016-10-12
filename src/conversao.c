@@ -148,6 +148,10 @@ void avaliaExpressao(char *expressao_pos){
 		}
 		else if((expressao_pos[i] == '+') || (expressao_pos[i] == '-') || (expressao_pos[i] == '*') || (expressao_pos[i] == '/')){
 			double op2;
+			if(operandos->topo == NULL || operandos->topo->proximo == NULL){
+				printf("Operandos insuficientes para calcular a expressão!\n");
+				return;
+			}
 			switch(expressao_pos[i]){
 				case '+':
 					resultado = pop(operandos) + pop(operandos);
