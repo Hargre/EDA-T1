@@ -164,9 +164,15 @@ void avaliaExpressao(char *expressao_pos){
 					break;
 				case '/':
 					op2 = pop(operandos);
-					resultado = pop(operandos)/op2;
-					push(operandos, resultado);
-					break;
+					if(op2 == 0.0){
+						printf("Não pode dividir por 0!\n");
+						return;
+					}
+					else {
+						resultado = pop(operandos)/op2;
+						push(operandos, resultado);
+						break;
+					}
 			}
 			i++;
 		}

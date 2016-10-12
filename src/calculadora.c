@@ -73,12 +73,12 @@ void calcular(){
 				}
 			}
 			else if(operador[0] == '/'){
-				int op1, op2;
+				double op1, op2;
 				if(operador[1] == '!'){
 					while(operandos->topo->proximo != NULL){
 						op1 = pop(operandos);
 						op2 = pop(operandos);
-						if(op2 == 0){
+						if(op2 == 0.0){
 							printf("Não pode dividir por zero!\n");
 							return;
 						}
