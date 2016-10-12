@@ -1,4 +1,4 @@
-# ED-T1
+# ED-T1 - Felipe de Oliveira Hargreaves - 15/0009313
 Projeto de conversão e cálculo de operações posfixas a partir de infixas, realizado para a disciplina de Estruturas de Dados da Universidade de Brasília.
 
 ## Instruções para compilação e execução do programa (em Linux): 
