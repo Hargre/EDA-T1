@@ -79,8 +79,8 @@ void infixToPostfix(char *expressao, char *expressao_pos){
 	t_pilha *operadores = alocaPilha();
 
 	while(expressao[i] != '\0'){
-		if(isdigit(expressao[i])){
-			while(isdigit(expressao[i])){
+		if(isdigit(expressao[i]) || (expressao[i] == '.')){
+			while(isdigit(expressao[i]) || (expressao[i] == '.')){
 				expressao_pos[j++] = expressao[i++];
 			}
 			if(!isspace(expressao[i]) && expressao[i] != '\0'){
@@ -135,11 +135,11 @@ void avaliaExpressao(char *expressao_pos){
 	double resultado = 0;
 
 	while(expressao_pos[i] != '\0'){
-		if(isdigit(expressao_pos[i])){
+		if(isdigit(expressao_pos[i]) || (expressao_pos[i] == '.')){
 			int j = 0;
 			double valor;
 			char num[15];
-			while(isdigit(expressao_pos[i])){
+			while(isdigit(expressao_pos[i]) || (expressao_pos[i] == '.')){
 				num[j++] = expressao_pos[i++];
 			}
 			num[j] = '\0';
